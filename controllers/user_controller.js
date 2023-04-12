@@ -6,26 +6,26 @@ module.exports.profile = async function (req, res) {
     if(req.cookies.user_id){
     try{
         const user = await User.findById(req.cookies.user_id);
-        return res.redirect('/profile');
-
 
     if(user)
     {
-        return res.redirect(/user/signIn);
+        return res.redirect('user_profile',{
+            title: 'user profile',
+            user: user
+        });
     }
-}catch(error)
-{
-  console.log();  
-}
     else
     {
         return res.redirect('/user/signIn');
     }
+}catch(error)
+{
+  console.log('error in looding profile, error');  
 }
+ } else{
 
-    return res.render('user_profile', {
-        title: 'user profile'
-    });
+    return res.render('/user/signIn');
+ }
 };
 
 //render sign in page
@@ -113,3 +113,12 @@ module.exports.createSession = async function (req, res) {
         console.log('error in signing', error);
     }
 };
+module.exports.signOut = async function(req, res){
+    try{
+        res.clearCookies('user_id');
+        return res.redirect('/user/signIn');
+
+    }catch(error){
+        console.log('error in signing out', error);
+    }
+}
