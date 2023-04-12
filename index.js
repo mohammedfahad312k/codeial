@@ -2,6 +2,11 @@ const express = require('express');
 const port = 8001;
 const app = express();
 const db = require('./config/mongoose');
+const cookie_parser= require('cookie-parser');
+
+app.use(express.urlencoded());
+
+app.use(cookie_parser());
 
 //use of expresslayout in main file
 const expressLayout = require('express-ejs-layouts');
